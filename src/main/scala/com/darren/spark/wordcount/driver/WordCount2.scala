@@ -1,13 +1,14 @@
 package com.darren.spark.wordcount.driver
 
-import com.darren.spark.util.HDFSUtil
+import com.darren.spark.constants.FileFormat
+import com.darren.spark.util.{HDFSUtil, LoadUtil}
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs.{FileSystem, Path}
 import org.apache.spark.sql.SparkSession
 
 object WordCount2 {
   def main(args: Array[String]): Unit = {
-
+    System.setProperty("hadoop.home.dir", "D:\\project\\program\\hadoop-common-2.7.1-bin-master")
     val sparkSession = SparkSession.builder()
       .master("local")
       .appName("WordCount")
@@ -16,18 +17,28 @@ object WordCount2 {
     // set log level
     sparkSession.sparkContext.setLogLevel("WARN")
 
-    val inputPath = new Path("/user/ocrdev02/test/wordCount.txt");
-    val input = sparkSession.read.textFile(inputPath.toString).rdd
+
+    val inputPath = "test-in/wordcount/"
+    val outputPath = "test-out/wordcount/output"
+
+    import sparkSession.implicits._
+    val input = LoadUtil.readFile(sparkSession, FileFormat.TEXT, inputPath.toString).as[String].rdd
     input.foreach(println(_))
 
-    val hdfs : FileSystem = FileSystem.get(new Configuration)
-    val outputPath = new Path("/user/ocrdev02/test/output");
+    val hdfs: FileSystem = FileSystem.get(new Configuration)
+
     HDFSUtil.deleteFile(hdfs, outputPath.toString)
 
-    input.flatMap(_.split(" ")).map((_, 1)).reduceByKey(_ + _).map(a => {
+    val result = input.flatMap(_.split(" ")).map((_, 1)).reduceByKey(_ + _).map(a => {
       val left = a._1;
       val right = a._2;
       left + ", " + right
-    }).saveAsTextFile(outputPath.toString)
+    })
+
+    result.foreach(println)
+
+    result.saveAsTextFile(outputPath.toString)
+
+    sparkSession.close()
   }
 }

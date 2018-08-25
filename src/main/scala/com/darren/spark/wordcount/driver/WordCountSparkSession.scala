@@ -37,7 +37,7 @@ object WordCountSparkSession {
     HDFSUtil.deleteFile(hdfs, outputPath)
 
     import sparkSession.implicits._
-    val input = LoadUtil.readFile(sparkSession, FileFormat.TXT, inputPath.toString).as[String].rdd
+    val input = LoadUtil.readFile(sparkSession, FileFormat.TEXT, inputPath.toString).as[String].rdd
     input.foreach(println(_))
 
 
