@@ -1,3 +1,7 @@
 out/
 .gradle/
 .idea/
+test-out/
+test-in/load/etl_total_provider_data_m2_big.csv
+test-in/load/etl_total_provider_data_m2_small.csv
+
