@@ -15,4 +15,5 @@ object Test1{
 
   println("xxx")
   println("xxx")
+  println("xxx")
 }
