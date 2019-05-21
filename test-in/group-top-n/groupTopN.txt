@@ -1,0 +1,12 @@
+zhangsan 100
+lisi 100
+wangwu 100
+zhangsan 20
+lisi 20
+wangwu 20
+zhangsan 80
+lisi 80
+wangwu 80
+zhangsan 95
+lisi 95
+wangwu 95

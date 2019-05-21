@@ -3,21 +3,21 @@ package com.darren.spark.model
 import org.apache.spark.sql.types._
 
 case class ScaledUaCappingData(
-                                level_1_id: String,
-                                level_2_id: String,
-                                level_3_id: String,
-                                level_4_id: String,
-                                level_5_id: String,
-                                demographic_id: Int,
-                                level_type_code: Int,
-                                geography_code: Int,
-                                platform_type_code: Int,
-                                device_type_code: Int,
-                                intab_period_id: Long,
-                                intab_period_type_code: Int,
-                                scaled_unique_audience: Double,
-                                scaled_impressions: Double
-                              )
+  level_1_id: String,
+  level_2_id: String,
+  level_3_id: String,
+  level_4_id: String,
+  level_5_id: String,
+  demographic_id: Int,
+  level_type_code: Int,
+  geography_code: Int,
+  platform_type_code: Int,
+  device_type_code: Int,
+  intab_period_id: Long,
+  intab_period_type_code: Int,
+  scaled_unique_audience: Double,
+  scaled_impressions: Double
+)
 
 object ScaledUaCappingData {
   def schema: StructType = {

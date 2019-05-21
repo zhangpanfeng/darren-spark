@@ -7,11 +7,18 @@ object Test {
     val spark = SparkSession.builder().master("local").appName("test").getOrCreate()
     val text = spark.sparkContext.textFile("test-in/load/txt/EventDB-DDL.sql")
 
-    //text.persist()
+    text.persist()
     for(i <- 1 to 3){
       val start = System.currentTimeMillis();
       println(text.count())
-      println("Cost: " + (System.currentTimeMillis() - start))
+      println("First Cost: " + (System.currentTimeMillis() - start))
+    }
+
+    text.unpersist()
+    for(i <- 1 to 3){
+      val start = System.currentTimeMillis();
+      println(text.count())
+      println("Second Cost: " + (System.currentTimeMillis() - start))
     }
     spark.close()
   }
